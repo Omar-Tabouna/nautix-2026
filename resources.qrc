@@ -1,0 +1,16 @@
+<RCC>
+  <qresource prefix="/">
+    <file>Front/icons/acw_arrow.png</file>
+    <file>Front/icons/circle.png</file>
+    <file>Front/icons/circle2.png</file>
+    <file>Front/icons/closed_Hgripper.png</file>
+    <file>Front/icons/closed_Vgripper.png</file>
+    <file>Front/icons/cw_arrow.png</file>
+    <file>Front/icons/green.png</file>
+    <file>Front/icons/light_green.png</file>
+    <file>Front/icons/light_red.png</file>
+    <file>Front/icons/open_Hgripper.png</file>
+    <file>Front/icons/open_Vgripper.png</file>
+    <file>Front/icons/red.png</file>
+  </qresource>
+</RCC>
