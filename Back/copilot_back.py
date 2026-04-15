@@ -16,10 +16,25 @@ class CoPilotWindow(QMainWindow):
         self.thread.start()
         self.ui.comboBox_4.currentTextChanged.connect(self.change_camera)
 
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.update_frames)
-        self.timer.start(30)
+        self.video_timer = QTimer()
+        self.video_timer.timeout.connect(self.update_frames)
+        self.video_timer.start(15)
 
+        self.clock_timer = QTimer()
+        self.ui.lcdNumber.display("15:00")
+        self.seconds = 15*60
+        self.clock_timer.timeout.connect(self.update_clock)
+        self.ui.start_btn.clicked.connect(lambda: self.clock_timer.start(1000))
+        self.ui.reset_btn.clicked.connect(self.reset_clock)
+
+    def update_clock(self):
+        if self.seconds >= 0:
+            self.seconds -= 1
+            self.ui.lcdNumber.display(f"{self.seconds//60:02d}:{self.seconds%60:02d}")
+
+    def reset_clock(self):
+        self.clock_timer.stop()
+        self.ui.lcdNumber.display("15:00")
     
     def change_camera(self):
         cam_index = self.ui.comboBox_4.currentIndex()
