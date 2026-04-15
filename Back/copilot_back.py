@@ -1,10 +1,9 @@
 import cv2
 from PySide6.QtGui import QImage, QPixmap
 from PySide6.QtCore import QThread, Qt, QTimer
-
 from PySide6.QtWidgets import QMainWindow
 from Front.copilot_front import Ui_CoPilot_Window
-
+import network
 
 class CoPilotWindow(QMainWindow):
     def __init__(self):
@@ -26,6 +25,7 @@ class CoPilotWindow(QMainWindow):
         self.clock_timer.timeout.connect(self.update_clock)
         self.ui.start_btn.clicked.connect(lambda: self.clock_timer.start(1000))
         self.ui.reset_btn.clicked.connect(self.reset_clock)
+
 
     def update_clock(self):
         if self.seconds >= 0:
