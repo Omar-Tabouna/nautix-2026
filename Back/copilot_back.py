@@ -3,7 +3,6 @@ from PySide6.QtGui import QImage, QPixmap
 from PySide6.QtCore import QThread, Qt, QTimer
 from PySide6.QtWidgets import QMainWindow
 from Front.copilot_front import Ui_CoPilot_Window
-import network
 
 class CoPilotWindow(QMainWindow):
     def __init__(self):
