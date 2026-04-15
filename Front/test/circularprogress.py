@@ -17,7 +17,6 @@ class CircularProgress(QWidget):
         margin = 10
 
         rect = QRectF(margin, margin, width - 2*margin, height - 2*margin)
-
         painter = QPainter(self)
         painter.setRenderHint(QPainter.Antialiasing)
 
@@ -30,6 +29,7 @@ class CircularProgress(QWidget):
         pen.setColor(QColor("#3498db"))
         painter.setPen(pen)
 
+        
         # angle: start at top (90°), go clockwise negative
         span_angle = int(-360 * self.value / 100)
         painter.drawArc(rect, 90 * 16, span_angle * 16)

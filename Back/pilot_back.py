@@ -26,6 +26,11 @@ class PilotWindow(QMainWindow):
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_frames)
         self.timer.start(15)
+        
+        ############################################# for testing ###################################################
+        self.ui.Speed_bar.setValue(60)
+        self.ui.Gain_bar.setValue(25)
+        #############################################################################################################
 
     def change_camera(self, changed_index):
         new_cam = self.boxes[changed_index].currentIndex()

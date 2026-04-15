@@ -13,6 +13,89 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+    background-color: #0f1117;
+}
+
+QFrame#frame {
+    background-color: #1a1d27;
+    border: 1px solid #2a2d3a;
+    border-radius: 14px;
+}
+
+/* Labels */
+QLabel {
+    color: #e5e7eb;
+    font-size: 13px;
+}
+
+QLabel#prim_feed_label {
+    color: #9ca3af;
+    font-weight: 600;
+}
+
+QLabel#Stabilizer_label {
+    background-color: #00c8ff;
+    color: #0f1117;
+    font-weight: bold;
+    border-radius: 8px;
+}
+
+/* ComboBox */
+QComboBox {
+    background-color: #0f1117;
+    color: #e5e7eb;
+    border: 1px solid #2a2d3a;
+    border-radius: 8px;
+    padding: 6px 10px;
+}
+
+QComboBox:hover {
+    border: 1px solid #00c8ff;
+}
+
+QComboBox QAbstractItemView {
+    background-color: #1a1d27;
+    color: #e5e7eb;
+    selection-background-color: #003a47;
+    selection-color: #00c8ff;
+}
+
+QComboBox::drop-down {
+    width: 36px;
+}
+
+/* Buttons */
+QPushButton {
+    background-color: #00c8ff;
+    color: #0f1117;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-weight: 600;
+}
+
+QPushButton:hover {
+    background-color: #33d4ff;
+}
+
+QPushButton:pressed {
+    background-color: #0099cc;
+}
+
+/* LCD */
+QLCDNumber {
+    background-color: #0f1117;
+    color: #00c8ff;
+    border: 1px solid #2a2d3a;
+    border-radius: 8px;
+}
+
+/* Frames inside UI */
+QFrame {
+    background-color: transparent;
+}</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_8">
     <item>
@@ -719,15 +802,16 @@
          <widget class="QLabel" name="label_8">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>30</y>
+            <x>0</x>
+            <y>10</y>
             <width>91</width>
             <height>41</height>
            </rect>
           </property>
           <property name="font">
            <font>
-            <pointsize>16</pointsize>
+            <pointsize>-1</pointsize>
+            <bold>true</bold>
            </font>
           </property>
           <property name="text">
@@ -759,15 +843,16 @@
          <widget class="QLabel" name="label_12">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>30</y>
+            <x>0</x>
+            <y>10</y>
             <width>91</width>
             <height>41</height>
            </rect>
           </property>
           <property name="font">
            <font>
-            <pointsize>16</pointsize>
+            <pointsize>-1</pointsize>
+            <bold>true</bold>
            </font>
           </property>
           <property name="text">
@@ -789,7 +874,7 @@
          </property>
          <property name="font">
           <font>
-           <pointsize>24</pointsize>
+           <pointsize>-1</pointsize>
            <bold>true</bold>
           </font>
          </property>

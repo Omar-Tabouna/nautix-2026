@@ -11,7 +11,7 @@ class MainWindow(QMainWindow):
         # self.timer = QTimer()
         # self.timer.timeout.connect(self.updatetime)
         # self.timer.start(10)
-        self.ui.progress.setValue(65)
+        self.ui.progress.setValue(25)
         
     def updatetime(self):
         if self.ui.progress.value < 100:

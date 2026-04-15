@@ -28,6 +28,88 @@ class Ui_CoPilot_Window(object):
         if not CoPilot_Window.objectName():
             CoPilot_Window.setObjectName(u"CoPilot_Window")
         CoPilot_Window.resize(1128, 800)
+        CoPilot_Window.setStyleSheet(u"QMainWindow {\n"
+"    background-color: #0f1117;\n"
+"}\n"
+"\n"
+"QFrame#frame {\n"
+"    background-color: #1a1d27;\n"
+"    border: 1px solid #2a2d3a;\n"
+"    border-radius: 14px;\n"
+"}\n"
+"\n"
+"/* Labels */\n"
+"QLabel {\n"
+"    color: #e5e7eb;\n"
+"    font-size: 13px;\n"
+"}\n"
+"\n"
+"QLabel#prim_feed_label {\n"
+"    color: #9ca3af;\n"
+"    font-weight: 600;\n"
+"}\n"
+"\n"
+"QLabel#Stabilizer_label {\n"
+"    background-color: #00c8ff;\n"
+"    color: #0f1117;\n"
+"    font-weight: bold;\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* ComboBox */\n"
+"QComboBox {\n"
+"    background-color: #0f1117;\n"
+"    color: #e5e7eb;\n"
+"    border: 1px solid #2a2d3a;\n"
+"    border-radius: 8px;\n"
+"    padding: 6px 10px;\n"
+"}\n"
+"\n"
+"QComboBox:hover {\n"
+"    border: 1px solid #00c8ff;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView {\n"
+"    background-color: #1a1d27;\n"
+"    color: #e5e7eb;\n"
+"    selection-background-color: #003a47;\n"
+"    selection-color: #00c8ff;\n"
+"}\n"
+"\n"
+"QComboBox::drop-down {\n"
+"    width: 36px;\n"
+"}\n"
+""
+                        "\n"
+"/* Buttons */\n"
+"QPushButton {\n"
+"    background-color: #00c8ff;\n"
+"    color: #0f1117;\n"
+"    border-radius: 8px;\n"
+"    padding: 6px 10px;\n"
+"    font-weight: 600;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #33d4ff;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #0099cc;\n"
+"}\n"
+"\n"
+"/* LCD */\n"
+"QLCDNumber {\n"
+"    background-color: #0f1117;\n"
+"    color: #00c8ff;\n"
+"    border: 1px solid #2a2d3a;\n"
+"    border-radius: 8px;\n"
+"}\n"
+"\n"
+"/* Frames inside UI */\n"
+"QFrame {\n"
+"    background-color: transparent;\n"
+"}")
         self.centralwidget = QWidget(CoPilot_Window)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout_4 = QVBoxLayout(self.centralwidget)
@@ -194,7 +276,7 @@ class Ui_CoPilot_Window(object):
         self.label_8.setObjectName(u"label_8")
         self.label_8.setGeometry(QRect(10, 30, 91, 41))
         font = QFont()
-        font.setPointSize(16)
+        font.setBold(True)
         self.label_8.setFont(font)
         self.label_8.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.Gain_bar = CircularProgress(self.frame)
@@ -240,10 +322,7 @@ class Ui_CoPilot_Window(object):
         self.Stabilizer_label = QLabel(self.frame)
         self.Stabilizer_label.setObjectName(u"Stabilizer_label")
         self.Stabilizer_label.setGeometry(QRect(940, 50, 151, 71))
-        font1 = QFont()
-        font1.setPointSize(24)
-        font1.setBold(True)
-        self.Stabilizer_label.setFont(font1)
+        self.Stabilizer_label.setFont(font)
         self.Stabilizer_label.setStyleSheet(u"background-color: rgb(255, 0, 0);")
         self.Stabilizer_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 

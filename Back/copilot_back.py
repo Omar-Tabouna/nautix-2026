@@ -25,6 +25,11 @@ class CoPilotWindow(QMainWindow):
         self.clock_timer.timeout.connect(self.update_clock)
         self.ui.start_btn.clicked.connect(lambda: self.clock_timer.start(1000))
         self.ui.reset_btn.clicked.connect(self.reset_clock)
+        
+        ############################################# for testing ###################################################
+        self.ui.Speed_bar.setValue(60)
+        self.ui.Gain_bar.setValue(25)
+        #############################################################################################################
 
 
     def update_clock(self):
