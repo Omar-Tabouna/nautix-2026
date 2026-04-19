@@ -4,6 +4,7 @@ from PySide6.QtCore import QThread, Qt, QTimer
 from PySide6.QtWidgets import QMainWindow
 
 from Front.pilot_front import Ui_Pilot_Window
+from joystick_thread import JoystickThread
 
 RTSP_URLS = [
     "rtsp://192.168.33.1:8554/cam1",
@@ -32,13 +33,21 @@ class PilotWindow(QMainWindow):
 
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_frames)
-        self.timer.start(30)
+        self.timer.start(15)
         
         #############################################
         # TEST UI VALUES
         self.ui.Speed_bar.setValue(60)
         self.ui.Gain_bar.setValue(25)
         #############################################
+        
+        self.joystick_thread = JoystickThread(self)
+        self.joystick_thread.moved.connect(self.on_joystick_moved)
+        self.joystick_thread.start()
+
+    def on_joystick_moved(self, x: float, y: float):
+        self.ui.joystick_animation.set_position(x, y)
+
 
     def change_camera(self, changed_index):
         new_cam = self.boxes[changed_index].currentIndex()
@@ -76,6 +85,7 @@ class PilotWindow(QMainWindow):
     def closeEvent(self, event):
         for t in self.threads:
             t.stop()
+        self.joystick_thread.stop()
         event.accept()
         
 

@@ -4,6 +4,7 @@ from PySide6.QtCore import QThread, Qt, QTimer
 from PySide6.QtWidgets import QMainWindow
 
 from Front.copilot_front import Ui_CoPilot_Window
+from joystick_thread import JoystickThread
 
 RTSP_URLS = [
     "rtsp://192.168.33.1:8554/cam1",
@@ -29,7 +30,7 @@ class CoPilotWindow(QMainWindow):
 
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_frames)
-        self.timer.start(30)
+        self.timer.start(15)
         
         self.clock_timer = QTimer() 
         self.ui.lcdNumber.display("15:00") 
@@ -45,6 +46,13 @@ class CoPilotWindow(QMainWindow):
         
         self.ui.Stabilizer_label.setStyleSheet(u"background-color: rgb(0, 255, 0);")
         #############################################################################################################
+        
+        self.joystick_thread = JoystickThread(self)
+        self.joystick_thread.moved.connect(self.on_joystick_moved)
+        self.joystick_thread.start()
+    
+    def on_joystick_moved(self, x: float, y: float):
+        self.ui.joystick_animation.set_position(x, y)
 
     def update_clock(self): 
         if self.seconds >= 0: 
@@ -80,6 +88,7 @@ class CoPilotWindow(QMainWindow):
 
     def closeEvent(self, event):
         self.thread.stop()
+        self.joystick_thread.stop()
         event.accept()
 
 

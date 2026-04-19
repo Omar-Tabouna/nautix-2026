@@ -19,7 +19,8 @@ from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLCDNumber,
     QLabel, QMainWindow, QPushButton, QSizePolicy,
     QSpacerItem, QStatusBar, QVBoxLayout, QWidget)
 
-from Front.circularprogress import CircularProgress
+from Back.circularprogress import CircularProgress
+from Back.joystickwidget import JoyStickWidget
 import resources_rc
 
 class Ui_CoPilot_Window(object):
@@ -180,18 +181,17 @@ class Ui_CoPilot_Window(object):
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.label = QLabel(self.frame)
-        self.label.setObjectName(u"label")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        self.joystick_animation = JoyStickWidget(self.frame)
+        self.joystick_animation.setObjectName(u"joystick_animation")
+        sizePolicy1 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Maximum)
         sizePolicy1.setHorizontalStretch(0)
         sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
-        self.label.setSizePolicy(sizePolicy1)
-        self.label.setMaximumSize(QSize(50, 50))
-        self.label.setPixmap(QPixmap(u":/Front/icons/circle.png"))
-        self.label.setScaledContents(True)
+        sizePolicy1.setHeightForWidth(self.joystick_animation.sizePolicy().hasHeightForWidth())
+        self.joystick_animation.setSizePolicy(sizePolicy1)
+        self.joystick_animation.setMinimumSize(QSize(100, 100))
+        self.joystick_animation.setMaximumSize(QSize(100, 100))
 
-        self.horizontalLayout_4.addWidget(self.label)
+        self.horizontalLayout_4.addWidget(self.joystick_animation)
 
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
@@ -201,8 +201,11 @@ class Ui_CoPilot_Window(object):
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.thrustup_label = QLabel(self.frame)
         self.thrustup_label.setObjectName(u"thrustup_label")
-        sizePolicy1.setHeightForWidth(self.thrustup_label.sizePolicy().hasHeightForWidth())
-        self.thrustup_label.setSizePolicy(sizePolicy1)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.thrustup_label.sizePolicy().hasHeightForWidth())
+        self.thrustup_label.setSizePolicy(sizePolicy2)
         self.thrustup_label.setMinimumSize(QSize(60, 50))
         self.thrustup_label.setMaximumSize(QSize(60, 50))
         self.thrustup_label.setPixmap(QPixmap(u":/Front/icons/light_green.png"))
@@ -219,8 +222,8 @@ class Ui_CoPilot_Window(object):
 
         self.thrustdown_label = QLabel(self.frame)
         self.thrustdown_label.setObjectName(u"thrustdown_label")
-        sizePolicy1.setHeightForWidth(self.thrustdown_label.sizePolicy().hasHeightForWidth())
-        self.thrustdown_label.setSizePolicy(sizePolicy1)
+        sizePolicy2.setHeightForWidth(self.thrustdown_label.sizePolicy().hasHeightForWidth())
+        self.thrustdown_label.setSizePolicy(sizePolicy2)
         self.thrustdown_label.setMinimumSize(QSize(60, 50))
         self.thrustdown_label.setMaximumSize(QSize(60, 50))
         self.thrustdown_label.setPixmap(QPixmap(u":/Front/icons/light_red.png"))
@@ -236,26 +239,24 @@ class Ui_CoPilot_Window(object):
         self.horizontalLayout_4.addItem(self.horizontalSpacer_2)
 
         self.verticalLayout_6 = QVBoxLayout()
+        self.verticalLayout_6.setSpacing(16)
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
         self.acw_label = QLabel(self.frame)
         self.acw_label.setObjectName(u"acw_label")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Maximum)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.acw_label.sizePolicy().hasHeightForWidth())
-        self.acw_label.setSizePolicy(sizePolicy2)
+        sizePolicy1.setHeightForWidth(self.acw_label.sizePolicy().hasHeightForWidth())
+        self.acw_label.setSizePolicy(sizePolicy1)
         self.acw_label.setMaximumSize(QSize(100, 100))
-        self.acw_label.setPixmap(QPixmap(u":/Front/icons/acw_arrow.png"))
+        self.acw_label.setPixmap(QPixmap(u":/Front/icons/acw_arrow2.png"))
         self.acw_label.setScaledContents(True)
 
         self.verticalLayout_6.addWidget(self.acw_label)
 
         self.cw_label = QLabel(self.frame)
         self.cw_label.setObjectName(u"cw_label")
-        sizePolicy2.setHeightForWidth(self.cw_label.sizePolicy().hasHeightForWidth())
-        self.cw_label.setSizePolicy(sizePolicy2)
+        sizePolicy1.setHeightForWidth(self.cw_label.sizePolicy().hasHeightForWidth())
+        self.cw_label.setSizePolicy(sizePolicy1)
         self.cw_label.setMaximumSize(QSize(100, 100))
-        self.cw_label.setPixmap(QPixmap(u":/Front/icons/cw_arrow.png"))
+        self.cw_label.setPixmap(QPixmap(u":/Front/icons/cw_arrow2.png"))
         self.cw_label.setScaledContents(True)
 
         self.verticalLayout_6.addWidget(self.cw_label)
@@ -271,8 +272,8 @@ class Ui_CoPilot_Window(object):
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.Hgripper_label = QLabel(self.frame)
         self.Hgripper_label.setObjectName(u"Hgripper_label")
-        sizePolicy1.setHeightForWidth(self.Hgripper_label.sizePolicy().hasHeightForWidth())
-        self.Hgripper_label.setSizePolicy(sizePolicy1)
+        sizePolicy2.setHeightForWidth(self.Hgripper_label.sizePolicy().hasHeightForWidth())
+        self.Hgripper_label.setSizePolicy(sizePolicy2)
         self.Hgripper_label.setMinimumSize(QSize(70, 70))
         self.Hgripper_label.setMaximumSize(QSize(70, 70))
         self.Hgripper_label.setStyleSheet(u"")
@@ -283,8 +284,8 @@ class Ui_CoPilot_Window(object):
 
         self.Vgripper_label = QLabel(self.frame)
         self.Vgripper_label.setObjectName(u"Vgripper_label")
-        sizePolicy1.setHeightForWidth(self.Vgripper_label.sizePolicy().hasHeightForWidth())
-        self.Vgripper_label.setSizePolicy(sizePolicy1)
+        sizePolicy2.setHeightForWidth(self.Vgripper_label.sizePolicy().hasHeightForWidth())
+        self.Vgripper_label.setSizePolicy(sizePolicy2)
         self.Vgripper_label.setMinimumSize(QSize(70, 70))
         self.Vgripper_label.setMaximumSize(QSize(70, 70))
         self.Vgripper_label.setPixmap(QPixmap(u":/Front/icons/open_Vgripper.png"))
@@ -301,8 +302,8 @@ class Ui_CoPilot_Window(object):
 
         self.Speed_bar = CircularProgress(self.frame)
         self.Speed_bar.setObjectName(u"Speed_bar")
-        sizePolicy2.setHeightForWidth(self.Speed_bar.sizePolicy().hasHeightForWidth())
-        self.Speed_bar.setSizePolicy(sizePolicy2)
+        sizePolicy1.setHeightForWidth(self.Speed_bar.sizePolicy().hasHeightForWidth())
+        self.Speed_bar.setSizePolicy(sizePolicy1)
         self.Speed_bar.setMinimumSize(QSize(100, 100))
         self.Speed_bar.setMaximumSize(QSize(100, 100))
         self.label_9 = QLabel(self.Speed_bar)
@@ -321,8 +322,8 @@ class Ui_CoPilot_Window(object):
 
         self.Gain_bar = CircularProgress(self.frame)
         self.Gain_bar.setObjectName(u"Gain_bar")
-        sizePolicy2.setHeightForWidth(self.Gain_bar.sizePolicy().hasHeightForWidth())
-        self.Gain_bar.setSizePolicy(sizePolicy2)
+        sizePolicy1.setHeightForWidth(self.Gain_bar.sizePolicy().hasHeightForWidth())
+        self.Gain_bar.setSizePolicy(sizePolicy1)
         self.Gain_bar.setMinimumSize(QSize(100, 100))
         self.Gain_bar.setMaximumSize(QSize(100, 100))
         self.Gain_bar.setStyleSheet(u"background-color: transparent;")
@@ -419,7 +420,6 @@ class Ui_CoPilot_Window(object):
         self.cambtn3.setText(QCoreApplication.translate("CoPilot_Window", u"3", None))
         self.cambtn4.setText(QCoreApplication.translate("CoPilot_Window", u"4", None))
         self.Camera.setText(QCoreApplication.translate("CoPilot_Window", u"Cam 1", None))
-        self.label.setText("")
         self.thrustup_label.setText("")
         self.thrustdown_label.setText("")
         self.acw_label.setText("")

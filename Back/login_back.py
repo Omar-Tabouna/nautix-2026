@@ -1,6 +1,6 @@
 import sys
 import os
-from PySide6.QtWidgets import QApplication, QMainWindow, QDialog
+from PySide6.QtWidgets import QApplication, QDialog
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
