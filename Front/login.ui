@@ -1,103 +1,346 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>LoginWindow</class>
+ <widget class="QDialog" name="LoginWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>480</width>
+    <height>520</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>NAUTIX GUI</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="widget" native="true">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>90</y>
-      <width>641</width>
-      <height>331</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QLabel" name="welcome_label">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>20</pointsize>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Welcome to NAUTIX GUI!</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignmentFlag::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
-       <item alignment="Qt::AlignmentFlag::AlignRight">
-        <widget class="QLabel" name="login_label">
-         <property name="font">
-          <font>
-           <pointsize>15</pointsize>
-          </font>
-         </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog {
+    background-color: #0f1117;
+}
+QFrame#cardFrame {
+    background-color: #1a1d27;
+    border: 1px solid #2a2d3a;
+    border-radius: 16px;
+}
+QLabel#labelTitle {
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+QLabel#labelSubtitle {
+    color: #6b7280;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+QFrame#divider {
+    background-color: #00c8ff;
+    border: none;
+    max-height: 2px;
+    border-radius: 1px;
+}
+QLabel#labelRole {
+    color: #9ca3af;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+QLabel#labelIcon {
+    font-size: 32px;
+    color: #ffffff;
+}
+QComboBox#comboBoxRole {
+    background-color: #0f1117;
+    color: #e5e7eb;
+    border: 1px solid #2a2d3a;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+    min-height: 20px;
+}
+QComboBox#comboBoxRole:hover {
+    border: 1px solid #00c8ff;
+}
+QComboBox#comboBoxRole:focus {
+    border: 1px solid #00c8ff;
+}
+QComboBox#comboBoxRole::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 36px;
+    border-left: 1px solid #2a2d3a;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+QComboBox QAbstractItemView {
+    background-color: #1a1d27;
+    color: #e5e7eb;
+    border: 1px solid #2a2d3a;
+    selection-background-color: #003a47;
+    selection-color: #00c8ff;
+    padding: 4px;
+    outline: 0;
+}
+QPushButton#pushButtonLogin {
+    background-color: #00c8ff;
+    color: #0f1117;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 0px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    min-height: 20px;
+}
+QPushButton#pushButtonLogin:hover {
+    background-color: #33d4ff;
+}
+QPushButton#pushButtonLogin:pressed {
+    background-color: #0099cc;
+}
+QLabel#labelFooter {
+    color: #374151;
+    font-size: 10px;
+    letter-spacing: 1px;
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="outerLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>60</number>
+   </property>
+   <property name="topMargin">
+    <number>50</number>
+   </property>
+   <property name="rightMargin">
+    <number>60</number>
+   </property>
+   <property name="bottomMargin">
+    <number>50</number>
+   </property>
+   <item>
+    <widget class="QFrame" name="cardFrame">
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="cardLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>36</number>
+      </property>
+      <property name="topMargin">
+       <number>36</number>
+      </property>
+      <property name="rightMargin">
+       <number>36</number>
+      </property>
+      <property name="bottomMargin">
+       <number>36</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="labelIcon">
+        <property name="text">
+         <string>⚓</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="sp1">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Policy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>0</width>
+          <height>10</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelTitle">
+        <property name="text">
+         <string>NAUTIX GUI</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="sp2">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Policy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>0</width>
+          <height>6</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelSubtitle">
+        <property name="text">
+         <string>ROV CONTROL SYSTEM</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="sp3">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Policy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>0</width>
+          <height>18</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QFrame" name="divider">
+        <property name="frameShape">
+         <enum>QFrame::Shape::HLine</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Plain</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="sp4">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Policy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>0</width>
+          <height>24</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelRole">
+        <property name="text">
+         <string>SELECT ROLE</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="sp5">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Policy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>0</width>
+          <height>8</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QComboBox" name="userbox">
+        <item>
          <property name="text">
-          <string>Login as: </string>
+          <string>Pilot</string>
          </property>
-        </widget>
-       </item>
-       <item alignment="Qt::AlignmentFlag::AlignLeft">
-        <widget class="QComboBox" name="userbox">
-         <property name="font">
-          <font>
-           <pointsize>14</pointsize>
-          </font>
+        </item>
+        <item>
+         <property name="text">
+          <string>Copilot</string>
          </property>
-         <item>
-          <property name="text">
-           <string>Pilot</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Co-Pilot</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item alignment="Qt::AlignmentFlag::AlignHCenter">
-      <widget class="QPushButton" name="login_btn">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>Login</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <spacer name="sp6">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Policy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>0</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="login_btn">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="text">
+         <string>LOGIN</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="sp7">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Policy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>0</width>
+          <height>18</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelFooter">
+        <property name="text">
+         <string>NAUTIX v1.0  ·  AUTHORIZED ACCESS ONLY</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>
