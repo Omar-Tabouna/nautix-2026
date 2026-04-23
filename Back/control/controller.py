@@ -96,6 +96,11 @@ class Controller:
         self.BTN_RB   = 5
         self.BTN_BACK = 6
         self.BTN_START= 7
+        self.BTN_LT = 8   # L2 (as button)
+        self.BTN_RT = 9   # R2 (as button)
+
+        self._num_cameras = 3   # cameras 1–3
+        self._camera_idx  = 0
 
     # ------------------------------------------------------------------ #
     #  Connection helpers                                                  #
@@ -196,6 +201,18 @@ class Controller:
             arm_cmd = self._armed    # FIX: only emitted THIS tick, None all other ticks
             print(f"[CTRL] {'ARM' if self._armed else 'DISARM'}")
 
+        camera_cmd = None
+
+        if self._pressed(self.BTN_LT):
+            self._camera_idx = (self._camera_idx - 1) % self._num_cameras
+            camera_cmd = self._camera_idx
+            print(f"[CTRL] Camera slot 0 → cam {self._camera_idx + 1}")
+
+        if self._pressed(self.BTN_RT):
+            self._camera_idx = (self._camera_idx + 1) % self._num_cameras
+            camera_cmd = self._camera_idx
+            print(f"[CTRL] Camera slot 0 → cam {self._camera_idx + 1}")
+
         # D-pad: any direction pressed = toggle stabilize / manual
         hat = self._joy.get_hat(0)
         if hat != (0, 0) and self._prev_hat == (0, 0):
@@ -219,6 +236,13 @@ class Controller:
             "arm":       arm_cmd,    # FIX: None unless BACK was pressed this tick
             "mode":      mode_cmd,   # None unless changed this tick
             "gain":      gain,
+
+            "camera": camera_cmd, 
+
+            "left_x":  lh,
+            "left_y":  lv,
+            "right_x": rh,
+            "right_y": rv,
         }
 
     # ------------------------------------------------------------------ #

@@ -13,7 +13,7 @@ Run:
 
 import threading
 import time
-from PySide6.QtCore import QThread
+from PySide6.QtCore import QThread, Signal
 from control.controller     import Controller
 from control.pixhawk_bridge import PixhawkBridge
 from control.jetson_gripper import JetsonGripperClient
@@ -22,6 +22,8 @@ LOOP_HZ = 200
 
 
 class control_main(QThread):
+    new_data = Signal(dict)
+
     def __init__(self):
         super().__init__()
         self._running = True
@@ -47,6 +49,7 @@ class control_main(QThread):
 
                 msg = ctrl.read()
                 if msg:
+                    self.new_data.emit(msg) 
                     pix.update(
                         throttle = msg["throttle"],
                         yaw      = msg["yaw"],
