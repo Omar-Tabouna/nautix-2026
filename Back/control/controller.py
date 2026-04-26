@@ -32,6 +32,7 @@ import socket
 import json
 import time
 import platform
+import math
 
 JETSON_IP   = "192.168.33.1"
 JETSON_PORT = 5555
@@ -226,6 +227,11 @@ class Controller:
 
         self._update_prev_buttons()
 
+        fwd_pct  = (forward  - 1500) / 350   # −1 to 1
+        lat_pct  = (lateral  - 1500) / 350   # −1 to 1
+        speed = round(math.sqrt(fwd_pct**2 + lat_pct**2) / math.sqrt(2) * 100)
+        speed = min(100, speed)
+
         return {
             "throttle":  throttle,
             "yaw":       yaw,
@@ -238,6 +244,7 @@ class Controller:
             "gain":      gain,
 
             "camera": camera_cmd, 
+            "speed": speed,
 
             "left_x":  lh,
             "left_y":  lv,

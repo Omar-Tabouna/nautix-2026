@@ -19,23 +19,43 @@ class PilotWindow(QMainWindow):
         self.ui.setupUi(self)
 
         self.boxes = [self.ui.box1, self.ui.box2, self.ui.box3]
-        self.labels = [self.ui.Cam2, self.ui.Cam3]
+        self.labels = [self.ui.Cam1, self.ui.Cam2, self.ui.Cam3]
 
-        # display_map[slot] = which UDP camera index (1–3) is shown in labels[slot]
-        self.display_map = [1, 2, 3]
+        # Cam index convention:
+        #   0 = OAK/ZMQ camera
+        #   1, 2, 3 = UDP cameras (PORTS[0], PORTS[1], PORTS[2])
+        # display_map[slot] = which cam index is shown in labels[slot]
+        self.display_map = [0, 1, 2]  # OAK starts in slot 0, UDP 1&2 fill slots 1&2
 
-        # UDP cameras (indices 1–3)
+        # Latest frames cache — so we can re-display when swapping
+        self.latest_frames = {0: None, 1: None, 2: None, 3: None}
+
+        # Populate comboboxes with 4 camera options
+        cam_names = ["OAK", "Cam 1", "Cam 2", "Cam 3"]
+        for box in self.boxes:
+            box.blockSignals(True)
+            box.clear()
+            box.addItems(cam_names)
+            box.blockSignals(False)
+
+        # Set initial combobox selections to match display_map
+        for slot, cam in enumerate(self.display_map):
+            self.boxes[slot].blockSignals(True)
+            self.boxes[slot].setCurrentIndex(cam)
+            self.boxes[slot].blockSignals(False)
+
+        # UDP camera threads (cam indices 1–3)
         self.threads = [VideoThread(port) for port in PORTS]
         for i, t in enumerate(self.threads):
             cam_index = i + 1
             t.camera_image.connect(
-                lambda img, ci=cam_index: self.route_frame(ci, img)
+                lambda img, ci=cam_index: self.receive_frame(ci, img)
             )
             t.start()
 
-        # ZMQ / OAK camera — shown on self.ui.Camera (its own dedicated label)
+        # OAK/ZMQ camera (cam index 0)
         self.zmq_thread = ZMQThread(address="192.168.33.1", port="5454")
-        self.zmq_thread.frame_ready.connect(self.update_oak_label)
+        self.zmq_thread.frame_ready.connect(lambda img: self.receive_frame(0, img))
         self.zmq_thread.disconnected.connect(self.on_cam_disconnected)
         self.zmq_thread.start()
 
@@ -45,7 +65,6 @@ class PilotWindow(QMainWindow):
         #############################################
         # TEST UI VALUES
         self.ui.Speed_bar.setValue(60)
-        self.ui.Gain_bar.setValue(25)
         #############################################
 
         self.control_system = control_main()
@@ -56,38 +75,45 @@ class PilotWindow(QMainWindow):
     # Camera routing
     # ------------------------------------------------------------------
 
-    def route_frame(self, cam_index, img):
-        """Route a UDP camera frame to whichever slot it is mapped to."""
-        pix = QPixmap.fromImage(img)
+    def receive_frame(self, cam_index, img):
+        """Cache the latest frame and display it if the camera is currently mapped."""
+        self.latest_frames[cam_index] = img
         for slot, mapped_cam in enumerate(self.display_map):
             if mapped_cam == cam_index:
-                label = self.labels[slot]
-                label.setPixmap(pix.scaled(label.size(), Qt.KeepAspectRatio))
+                self._render_frame(slot, img)
                 return
 
-    def update_oak_label(self, img):
-        """Display the OAK/ZMQ frame on its dedicated label."""
+    def _render_frame(self, slot, img):
+        """Scale and display a QImage on the label at the given slot."""
+        label = self.labels[slot]
         pix = QPixmap.fromImage(img)
-        label = self.ui.Cam1
         label.setPixmap(pix.scaled(label.size(), Qt.KeepAspectRatio))
 
     def change_camera(self, changed_slot):
         """Swap camera assignments when a combo-box selection changes."""
-        new_cam = self.boxes[changed_slot].currentIndex() + 1
+        new_cam = self.boxes[changed_slot].currentIndex()   # 0=OAK, 1–3=UDP
         old_cam = self.display_map[changed_slot]
 
         if new_cam == old_cam:
             return
 
+        # If new_cam is already displayed in another slot, swap them
         for i in range(len(self.display_map)):
             if i != changed_slot and self.display_map[i] == new_cam:
-                self.boxes[i].blockSignals(True)
-                self.boxes[i].setCurrentIndex(old_cam - 1)
-                self.boxes[i].blockSignals(False)
                 self.display_map[i] = old_cam
+                self.boxes[i].blockSignals(True)
+                self.boxes[i].setCurrentIndex(old_cam)
+                self.boxes[i].blockSignals(False)
+                # Refresh that slot with the displaced cam's last frame
+                if self.latest_frames[old_cam] is not None:
+                    self._render_frame(i, self.latest_frames[old_cam])
                 break
 
         self.display_map[changed_slot] = new_cam
+
+        # Immediately show the last known frame for the newly selected camera
+        if self.latest_frames[new_cam] is not None:
+            self._render_frame(changed_slot, self.latest_frames[new_cam])
 
     # ------------------------------------------------------------------
     # UI updates from control system
@@ -98,23 +124,23 @@ class PilotWindow(QMainWindow):
 
     def update_ui(self, msg: dict):
         if msg.get("camera") is not None:
-            new_cam = msg["camera"] + 1          # controller index 0-based → cam 1-based
+            new_cam = msg["camera"]          # assume controller already sends 0-based index matching our convention
             old_cam = self.display_map[0]
 
             if new_cam != old_cam:
-                # if new_cam is already shown in another slot, swap
                 for i in range(1, len(self.display_map)):
                     if self.display_map[i] == new_cam:
                         self.display_map[i] = old_cam
                         self.boxes[i].blockSignals(True)
-                        self.boxes[i].setCurrentIndex(old_cam - 1)
+                        self.boxes[i].setCurrentIndex(old_cam)
                         self.boxes[i].blockSignals(False)
                         break
 
                 self.display_map[0] = new_cam
                 self.boxes[0].blockSignals(True)
-                self.boxes[0].setCurrentIndex(new_cam - 1)
+                self.boxes[0].setCurrentIndex(new_cam)
                 self.boxes[0].blockSignals(False)
+
         lx = msg["left_x"]
         ly = msg["left_y"]
         rx = msg["right_x"]
@@ -152,6 +178,7 @@ class PilotWindow(QMainWindow):
             self.ui.thrustdown_label.setPixmap(QPixmap(u":/Front/icons/light_red.png"))
 
         self.ui.joystick_animation.set_position(lx, ly)
+        self.ui.Speed_bar.setValue(msg["speed"])
 
     # ------------------------------------------------------------------
     # Cleanup
@@ -163,9 +190,6 @@ class PilotWindow(QMainWindow):
         self.zmq_thread.stop()
         self.control_system.stop()
         event.accept()
-
-
-# ----------------------------------------------------------------------
 
 class VideoThread(QThread):
     camera_image = Signal(QImage)

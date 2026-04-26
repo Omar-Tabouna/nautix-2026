@@ -56,8 +56,6 @@ class CoPilotWindow(QMainWindow):
 
         # ---------------- TEST UI ----------------
         self.ui.Speed_bar.setValue(60)
-        self.ui.Gain_bar.setValue(25)
-        self.ui.Stabilizer_label.setStyleSheet("background-color: rgb(0, 255, 0);")
 
         self.control_system = control_main()
         self.control_system.new_data.connect(self.update_ui)
